@@ -14,6 +14,9 @@ on:
     types:
       closed
 
+permissions:
+  pull-requests: write
+
 jobs:
   # Get the current step from .github/script/STEP so we can
   # limit running the main job when the learner is on the same step.
