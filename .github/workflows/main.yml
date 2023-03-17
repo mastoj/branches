@@ -14,7 +14,7 @@ on:
     types:
       closed
 
-permissions: read-all|write-all
+permissions: write-all
 
 jobs:
   # Get the current step from .github/script/STEP so we can
