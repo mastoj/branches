@@ -10,7 +10,6 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main
 
 jobs:
   # Get the current step from .github/script/STEP so we can
