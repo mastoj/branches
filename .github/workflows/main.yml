@@ -34,7 +34,7 @@ jobs:
         run: |
           PR_NUM=${{ github.event.number }}
           MSG=$(gh pr view ${PR_NUM} --json body --jq '.body')
-          echo $MSG
+          echo "Clear outpu|$MSG|"
       - name: github context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}   
