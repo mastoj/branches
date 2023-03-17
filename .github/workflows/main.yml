@@ -18,6 +18,8 @@ jobs:
   # Get the current step from .github/script/STEP so we can
   # limit running the main job when the learner is on the same step.
   get_pr_number:
+    env:
+      GH_TOKEN: ${{ github.token }}
     name: Check current step number
     runs-on: ubuntu-latest
     steps:
