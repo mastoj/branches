@@ -26,6 +26,11 @@ jobs:
       - id: get_step
         run: |
           echo "current_step=$(cat ./.github/script/STEP)" >> $GITHUB_OUTPUT
+      . name: write body
+        run: |
+          PR_NUM=${{ github.event.number }}
+          MSG=$(gh pr view ${PR_NUM} --json body --jq '.body')
+          echo $MSG
       - name: github context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}   
