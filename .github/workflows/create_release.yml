@@ -37,6 +37,7 @@ jobs:
       - name: Print changelog
         run: |
           git fetch --tags origin
+          git tag
           echo "Changelog:"
           echo "Previous version: ${{ steps.tag_version.outputs.previous_version }}"
           git show ${{ steps.tag_version.outputs.previous_version }}
