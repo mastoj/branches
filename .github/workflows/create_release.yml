@@ -8,11 +8,11 @@ name: Step 0, Start
 # Reference https://docs.github.com/en/actions/learn-github-actions/events-that-trigger-workflows
 on:
   workflow_dispatch:
-  pull_request:
-    branches:
-      main
-    types:
-      closed
+  # pull_request:
+  #   branches:
+  #     main
+  #   types:
+  #     closed
 
 permissions: write-all
 
@@ -27,17 +27,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - id: get_step
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}    
+      - name: Print changelog
         run: |
-          echo "current_step=$(cat ./.github/script/STEP)" >> $GITHUB_OUTPUT
-      - name: write body
-        run: |
-          PR_NUM=${{ github.event.number }}
-          MSG=$(gh pr view ${PR_NUM} --json body --jq '.body')
-          echo "Clear outpu|$MSG|"
-      - name: github context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}   
-        run: echo "$GITHUB_CONTEXT"
+          echo "Changelog:"
+          echo "${{ steps.tag_version.outputs.changelog }}"
     outputs:
       current_step: ${{ steps.get_step.outputs.current_step }}
