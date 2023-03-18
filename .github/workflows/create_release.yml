@@ -41,10 +41,10 @@ jobs:
       - name: Print changelog
         run: |
           echo "Changelog:"
-          echo "Previous version: ${{ steps.tag_version.outputs.previous_version }}"
-          git show v${{ steps.tag_version.outputs.previous_version }}
+          echo "Previous version: ${{ steps.tag_version.outputs.previous_tag }}"
+          git show v${{ steps.tag_version.outputs.previous_tag }}
           echo "Changes:"
-          git log v${{ steps.tag_version.outputs.previous_version }}...HEAD --format="%s" | grep -v "Merge pull request"
+          git log v${{ steps.tag_version.outputs.previous_tag }}...${{ steps.tag_version.outputs.new_tag }} --format="%s" | grep -v "Merge pull request"
 # echo "New version: ${{ steps.tag_version.outputs.new_version }}"
 # git show ${{ steps.tag_version.outputs.new_version }}
 # --pretty:'%s' 
