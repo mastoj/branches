@@ -36,7 +36,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}    
       - name: Print changelog
         run: |
-          git fetch
+          git fetch origin main:refs/remotes/origin/main
           echo "Changelog:"
           echo "Previous version: ${{ steps.tag_version.outputs.previous_version }}"
           echo "New version: ${{ steps.tag_version.outputs.new_version }}"
