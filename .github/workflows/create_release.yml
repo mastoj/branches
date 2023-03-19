@@ -90,7 +90,7 @@ jobs:
                             "items": [
                               {
                                 "type": "TextBlock",
-                                "text": "${{ steps.changelog.output.changelog }}"
+                                "text": "${{ steps.changelog.outputs.changelog }}"
                               }
                             ]
                           }
