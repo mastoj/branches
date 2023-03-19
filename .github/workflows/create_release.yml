@@ -49,7 +49,7 @@ jobs:
           echo "$CHANGELOG" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
       - name: Print change log
-        run: echo ${{ steps.changelog.outputs.changelog }}
+        run: echo "${{ steps.changelog.outputs.changelog }}"
       - name: Update Teams PR channel with links
         uses: satak/webrequest-action@v1.2.3
         with:
