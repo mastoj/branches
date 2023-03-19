@@ -39,9 +39,63 @@ jobs:
           git fetch --tags origin
           git tag
       - name: Print changelog
+        id: changelog
         run: |
           CHANGE_LOG=$(npx --yes @mastoj/md-changelog --from ${{ steps.tag_version.outputs.previous_tag }} --to ${{ steps.tag_version.outputs.new_tag }} --owner mastoj --repo branches --ghToken $GH_TOKEN)
-          echo "$CHANGE_LOG"
+          echo "change_log=$CHANGE_LOG" >> $GITHUB_OUTPUT
+      - name: Update Teams PR channel with links
+        uses: satak/webrequest-action@v1.2.3
+        with:
+          url: ${{ secrets.TEAMS_PR_URL }}
+          method: POST
+          payload: >-
+            {
+              "type":"message",
+              "attachments":[
+                  {
+                    "contentType":"application/vnd.microsoft.card.adaptive",
+                    "contentUrl":null,
+                    "content":{
+                        "$schema":"http://adaptivecards.io/schemas/adaptive-card.json",
+                        "type":"AdaptiveCard",
+                        "version":"1.2",
+                        "body":[
+                            {
+                              "type": "ColumnSet",
+                              "spacing": "large",
+                              "separator": true,
+                              "columns": [
+                                {
+                                  "width": "32px",
+                                  "items": [
+                                    {
+                                      "type": "Image",
+                                      "width": "32px",
+                                      "style": "person",
+                                      "horizontalAlignment": "center",
+                                      "url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+                                      "altText": "GitHub"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "width": "stretch",
+                                  "items": [
+                                    {
+                                      "type": "TextBlock",
+                                      "text": "${{ steps.changelog.output.change_log }}"
+                                    }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                      ]
+                    }
+                }
+              ]
+            }
 # echo "New version: ${{ steps.tag_version.outputs.new_version }}"
 # git show ${{ steps.tag_version.outputs.new_version }}
 # --pretty:'%s' 
