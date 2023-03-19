@@ -40,11 +40,8 @@ jobs:
           git tag
       - name: Print changelog
         run: |
-          echo "Changelog:"
-          echo "Previous version: ${{ steps.tag_version.outputs.previous_tag }}"
-          echo "Changes:"
-          MESSAGE=$(git log ${{ steps.tag_version.outputs.previous_tag }}...${{ steps.tag_version.outputs.new_tag }} --format="%s" | grep -v "Merge pull request")
-          echo "$MESSAGE"
+          CHANGE_LOG=$(npx --yes @mastoj/md-changelog --from ${{ steps.tag_version.outputs.previous_tag }} --to ${{ steps.tag_version.outputs.new_tag }} --owner mastoj --repo branches --ghToken $GH_TOKEN)
+          echo "$CHANGE_LOG"
 # echo "New version: ${{ steps.tag_version.outputs.new_version }}"
 # git show ${{ steps.tag_version.outputs.new_version }}
 # --pretty:'%s' 
