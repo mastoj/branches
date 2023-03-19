@@ -42,7 +42,7 @@ jobs:
         id: changelog
         run: |
           CHANGE_LOG=$(npx --yes @mastoj/md-changelog --from ${{ steps.tag_version.outputs.previous_tag }} --to ${{ steps.tag_version.outputs.new_tag }} --owner mastoj --repo branches --ghToken $GH_TOKEN)
-          echo "change_log=$CHANGE_LOG" >> $GITHUB_OUTPUT
+          echo "change_log=\"$CHANGE_LOG\"" >> $GITHUB_OUTPUT
       - name: Update Teams PR channel with links
         uses: satak/webrequest-action@v1.2.3
         with:
