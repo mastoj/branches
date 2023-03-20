@@ -61,7 +61,7 @@ jobs:
                     "@type": "MessageCard",
                     "@context": "https://schema.org/extensions",
                     "summary": "New release",
-                    "title": "New release for application in environment"
+                    "title": "New release for application in environment",
                     "sections": [
                       {
                         "text": ${{ toJson(steps.changelog.outputs.changelog) }}
