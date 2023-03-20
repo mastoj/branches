@@ -40,7 +40,7 @@ jobs:
       - name: Print changelog
         id: changelog
         run: |
-          CHANGELOG=$(npx --yes @mastoj/md-changelog --from ${{ steps.tag_version.outputs.previous_tag }} --to ${{ steps.tag_version.outputs.new_tag }} --owner mastoj --repo branches --ghToken $GH_TOKEN) --ticketUrlTemplate https://elkjop.atlassian.net/browse/{{id}}
+          CHANGELOG=$(npx --yes @mastoj/md-changelog --from ${{ steps.tag_version.outputs.previous_tag }} --to ${{ steps.tag_version.outputs.new_tag }} --owner mastoj --repo branches --ghToken $GH_TOKEN --ticketUrlTemplate https://elkjop.atlassian.net/browse/{{id}})
           echo "changelog<<EOF" >> $GITHUB_OUTPUT
           echo "$CHANGELOG" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
