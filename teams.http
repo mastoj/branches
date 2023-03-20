@@ -1,0 +1,23 @@
+### Post an adaptive card to a teams channel
+POST https://elkjopnordic.webhook.office.com/webhookb2/f3b1d58a-0610-4a1e-ad92-ea2ff954ca67@661f8f5f-1e7d-4d4d-a886-1d2661c4ddf8/IncomingWebhook/e6e55a7cbc2046e783194ba455efe8bc/38de31da-a086-4ae0-81f4-92d8573c631b
+Content-Type: "application/json"
+
+{
+  "type": "message",
+  "attachments": [
+    {
+      "contentType": "application/vnd.microsoft.teams.card.o365connector",
+      "content": {
+"@type": "MessageCard",
+    "@context": "https://schema.org/extensions",
+    "summary": "Summary",
+    "title": "Connector Card Markdown formatting",
+        "sections": [
+          {
+            "text": "**Changelog for revision v1.0.34 to v1.0.35**   \r   \r_**Changes**_:   \r- [c98eb37](https://github.com/mastoj/branches/commit/c98eb373ce76c747d41e94746eb9de89df3f7487) **Fix parenthesis**   \r- [5440c9e](https://github.com/mastoj/branches/commit/5440c9ed0e1de146e628416e824494bee847db9e) **Ticketurl (#57)**   \r  - Pull request: [57](https://www.github.com/mastoj/branches/pull/57)   \r  - Tickets:    \r    - [B2X-111](https://elkjop.atlassian.net/browse/B2X-111)    \r    - [B2X-999](https://elkjop.atlassian.net/browse/B2X-999)    \r- [fe179fe](https://github.com/mastoj/branches/commit/fe179fe809e87e08fadf41d372b73fcfb33ed639) **Feature y (#55)**   \r  - Pull request: [55](https://www.github.com/mastoj/branches/pull/55)   \r  - Tickets:    \r    - [B2X-111](https://elkjop.atlassian.net/browse/B2X-111)    \r    - [B2X-999](https://elkjop.atlassian.net/browse/B2X-999)    \r- [228d742](https://github.com/mastoj/branches/commit/228d742149bfb8d8a6f227e575a0e46af1318e4d) **Feature x (#54)**   \r  - Pull request: [54](https://www.github.com/mastoj/branches/pull/54)   \r  - Tickets:    \r    - [B2X-123](https://elkjop.atlassian.net/browse/B2X-123)    \r    - [B2X-456](https://elkjop.atlassian.net/browse/B2X-456)    \r    - [ITDS-786](https://elkjop.atlassian.net/browse/ITDS-786)    \r    - [B2X-666](https://elkjop.atlassian.net/browse/B2X-666)    \r"
+          }
+        ]
+      }
+    }
+  ]
+}
