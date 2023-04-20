@@ -9,8 +9,6 @@ name: Create release
 on:
   workflow_dispatch:
   push:
-    branches:
-      - main
   # pull_request:
   #   branches:
   #     main
@@ -40,9 +38,11 @@ jobs:
       - name: Print changelog
         id: changelog
         run: |
-          CHANGELOG=$(npx --yes @mastoj/md-changelog --from ${{ steps.tag_version.outputs.previous_tag }} --to ${{ steps.tag_version.outputs.new_tag }} --owner mastoj --repo branches --ghToken $GH_TOKEN) --ticketUrlTemplate https://elkjop.atlassian.net/browse/{{id}}
+          CHANGELOG=$(npx --yes @mastoj/md-changelog --from ${{ steps.tag_version.outputs.previous_tag }} --to ${{ steps.tag_version.outputs.new_tag }} --owner mastoj --repo branches --ghToken $GH_TOKEN --ticketUrlTemplate https://elkjop.atlassian.net/browse/{{id}})
+          PREVIOUS_VERSION=${{ steps.tag_version.outputs.previous_tag }}
+          echo "==> Previous version: $PREVIOUS_VERSION"
           echo "changelog<<EOF" >> $GITHUB_OUTPUT
-          echo "$CHANGELOG" >> $GITHUB_OUTPUT
+          echo ""
           echo "EOF" >> $GITHUB_OUTPUT
       - name: Print change log
         run: echo "${{ steps.changelog.outputs.changelog }}"
@@ -56,41 +56,15 @@ jobs:
               "type": "message",
               "attachments": [
                 {
-                  "contentType": "application/vnd.microsoft.card.adaptive",
-                  "contentUrl": null,
+                  "contentType": "application/vnd.microsoft.teams.card.o365connector",
                   "content": {
-                    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-                    "type": "AdaptiveCard",
-                    "version": "1.2",
-                    "body": [
+                    "@type": "MessageCard",
+                    "@context": "https://schema.org/extensions",
+                    "summary": "New release",
+                    "title": "New release for application in environment",
+                    "sections": [
                       {
-                        "type": "ColumnSet",
-                        "spacing": "large",
-                        "separator": true,
-                        "columns": [
-                          {
-                            "width": "32px",
-                            "items": [
-                              {
-                                "type": "Image",
-                                "width": "32px",
-                                "style": "person",
-                                "horizontalAlignment": "center",
-                                "url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
-                                "altText": "GitHub"
-                              }
-                            ]
-                          },
-                          {
-                            "width": "stretch",
-                            "items": [
-                              {
-                                "type": "TextBlock",
-                                "text": ${{ toJson(steps.changelog.outputs.changelog) }}
-                              }
-                            ]
-                          }
-                        ]
+                        "text": ${{ toJson(steps.changelog.outputs.changelog) }}
                       }
                     ]
                   }
