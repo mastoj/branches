@@ -49,7 +49,7 @@ jobs:
 
 
           echo "changelog<<EOF" >> $GITHUB_OUTPUT
-          echo "$CHANGELOG"
+          echo "$CHANGELOG" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
       - name: Print change log
         run: echo "${{ steps.changelog.outputs.changelog }}"
