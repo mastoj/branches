@@ -35,6 +35,8 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: ${{ github.event.inputs.tag }}
+      - name: Get tags
+        run: git fetch --tags origin
       - name: Get previous release tag
         id: get_previous_release_tag
         run: |
