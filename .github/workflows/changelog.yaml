@@ -36,8 +36,11 @@ on:
         description: 'An example secret, if needed.'
 
 jobs:
-  custom-job:
+  generate-changelog:
     runs-on: ubuntu-latest
+    outputs:
+      changelog: ${{ steps.changelog.outputs.changelog }}
+      tickets: ${{ steps.changelog.outputs.TICKETS }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -57,7 +60,7 @@ jobs:
           CHANGELOG=$(echo -E $CHANGELOG_RESULT | jq -r '.changelog')
           TICKETS=$(echo -E $CHANGELOG_RESULT | jq -r '.tickets | join(",")')
 
-          echo "TICKETS=$TICKETS >> $GITHUB_OUTPUT"
+          echo "TICKETS=$TICKETS" >> $GITHUB_OUTPUT
           echo "changelog<<EOF" >> $GITHUB_OUTPUT
           echo "$CHANGELOG" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
@@ -70,3 +73,20 @@ jobs:
           echo "ENV: ${{ inputs.env }}"
           echo "TICKETS: ${{ steps.changelog.outputs.TICKETS }}"
           echo "CHANGELOG: ${{ steps.changelog.outputs.changelog }}"
+
+  update-teams:
+    needs: generate-changelog
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update Teams PR channel with links
+        run: |
+          echo "CHANGELOG: ${{ needs.generate-changelog.outputs.changelog }}"
+
+  update-jira:
+    needs: generate-changelog
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Update Jira tickets
+        run: |
+          echo "TICKETS: ${{ needs.generate-changelog.outputs.TICKETS }}"
