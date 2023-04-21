@@ -42,7 +42,7 @@ jobs:
           echo -E "==> CHANGELOG: $CHANGELOG_RESULT"
 
 
-          CHANGELOG=$(echo -E $CHANGELOG_RESULT | jq '.changelog')
+          CHANGELOG=$(echo -E $CHANGELOG_RESULT | jq -E '.changelog')
           PREVIOUS_VERSION=${{ steps.tag_version.outputs.previous_tag }}
 
           echo "==> Previous version: $PREVIOUS_VERSION"
