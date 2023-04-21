@@ -39,6 +39,7 @@ jobs:
         id: changelog
         run: |
           CHANGELOG_RESULT=$(npx --yes @mastoj/md-changelog@0.0.17 --from ${{ steps.tag_version.outputs.previous_tag }} --to ${{ steps.tag_version.outputs.new_tag }} --owner mastoj --repo branches --ghToken $GH_TOKEN --ticketUrlTemplate https://elkjop.atlassian.net/browse/{{id}})
+          echo -E "==> CHANGELOG: $CHANGELOG"
           CHANGELOG=$(echo -E $CHANGELOG_RESULT | jq -r '.changelog')
           PREVIOUS_VERSION=${{ steps.tag_version.outputs.previous_tag }}
           echo "==> Previous version: $PREVIOUS_VERSION"
