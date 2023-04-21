@@ -3,8 +3,12 @@ name: Publish changelog
 on:
   workflow_dispatch:
     inputs:
-      tag:
+      deployment_tag:
         description: 'The tag for the deployment'
+        required: true
+        type: string
+      tag:
+        description: 'The tag for the image'
         required: true
         type: string
       env:
@@ -13,8 +17,12 @@ on:
         type: string
   workflow_call:
     inputs:
-      tag:
+      deployment_tag:
         description: 'The tag for the deployment'
+        required: true
+        type: string
+      tag:
+        description: 'The tag for the image'
         required: true
         type: string
       env:
@@ -42,8 +50,23 @@ jobs:
         run: |
           PREVIOUS_TAG=$(git tag --sort=creatordate | grep -P "v[0-9]+\.[0-9]+.[0-9]+$" | grep -v "${{ inputs.tag }}" | tail -n1)
           echo "PREVIOUS_TAG=$PREVIOUS_TAG" >> $GITHUB_OUTPUT
+      - name: Generate changelog
+        id: changelog
+        run: |
+          CHANGELOG_RESULT=$(npx --yes @mastoj/md-changelog@0.0.17 --from ${{ steps.tag_version.outputs.previous_tag }} --to ${{ steps.tag_version.outputs.new_tag }} --owner mastoj --repo branches --ghToken $GH_TOKEN --ticketUrlTemplate https://elkjop.atlassian.net/browse/{{id}})
+          CHANGELOG=$(echo -E $CHANGELOG_RESULT | jq -r '.changelog')
+          TICKETS=$(echo -E $CHANGELOG_RESULT | jq -r '.tickets | join(","))')
+
+          echo "TICKETS=$TICKETS >> $GITHUB_OUTPUT"
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGELOG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+      - name: Print change log
+        run: echo "${{ steps.changelog.outputs.changelog }}"
       - name: Run custom action
         run: |
           echo "PREVIOUS_TAG: ${{ steps.get_previous_release_tag.outputs.PREVIOUS_TAG }}"
           echo "TAG: ${{ inputs.tag }}"
           echo "ENV: ${{ inputs.env }}"
+          echo "TICKETS: ${{ steps.changelog.outputs.TICKETS }}"
+          echo "CHANGELOG: ${{ steps.changelog.outputs.changelog }}"
