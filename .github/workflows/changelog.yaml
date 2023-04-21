@@ -1,0 +1,31 @@
+name: Publish changelog
+
+on:
+  workflow_call:
+    inputs:
+      tag:
+        description: 'The tag for the deployment'
+        required: true
+        type: string
+      env:
+        description: 'The environment to deploy to'
+        required: true
+        type: string
+
+    secrets:
+      example_secret:
+        required: false
+        description: 'An example secret, if needed.'
+
+jobs:
+  custom-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.tag }}
+      - name: Run custom action
+        run: |
+          echo "TAG: ${{ inputs.tag }}"
+          echo "ENV: ${{ inputs.env }}"
