@@ -1,0 +1,11 @@
+changelog<<EOF
+**Changelog for revision v1.0.34 to v1.0.35**
+
+
+_Changesn_:
+
+- [dd74c73](https://github.com/mastoj/branches/commit/dd74c732f4360971eeb397bbcab7c81fdf5fdcaa) **Debug logging**
+- [00a4d6a](https://github.com/mastoj/branches/commit/00a4d6a164f9bb25167e19e73b9cfabe136017f9) **B2X-345 Don&#x27;t process new lines in echo**
+- [9d693b9](https://github.com/mastoj/branches/commit/9d693b9e83a35d25d1560cc3e08b09c72df73b92) **B2x-989 anewfile should also be json**
+- [ede4516](https://github.com/mastoj/branches/commit/ede451698398d41bafac1d04eb66fd25884108c8) **B2X-999 Ticket 999**
+EOF
