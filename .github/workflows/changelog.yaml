@@ -53,7 +53,7 @@ jobs:
       - name: Generate changelog
         id: changelog
         run: |
-          CHANGELOG_RESULT=$(npx --yes @mastoj/md-changelog@0.0.17 --from ${{ steps.tag_version.outputs.previous_tag }} --to ${{ steps.tag_version.outputs.new_tag }} --owner mastoj --repo branches --ghToken ${{ github.token }} --ticketUrlTemplate https://elkjop.atlassian.net/browse/{{id}})
+          CHANGELOG_RESULT=$(npx --yes @mastoj/md-changelog@0.0.17 --from ${{ steps.get_previous_release_tag.outputs.PREVIOUS_TAG }} --to ${{ inputs.tag }} --owner mastoj --repo branches --ghToken ${{ github.token }} --ticketUrlTemplate https://elkjop.atlassian.net/browse/{{id}})
           CHANGELOG=$(echo -E $CHANGELOG_RESULT | jq -r '.changelog')
           TICKETS=$(echo -E $CHANGELOG_RESULT | jq -r '.tickets | join(","))')
 
