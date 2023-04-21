@@ -42,11 +42,12 @@ jobs:
           echo -E "==> CHANGELOG: $CHANGELOG_RESULT"
 
 
-          CHANGELOG=$(echo -E $CHANGELOG_RESULT | jq -r '.changelog')
-
-
+          CHANGELOG=$(echo -E $CHANGELOG_RESULT | jq '.changelog')
           PREVIOUS_VERSION=${{ steps.tag_version.outputs.previous_tag }}
+
           echo "==> Previous version: $PREVIOUS_VERSION"
+
+
           echo "changelog<<EOF" >> $GITHUB_OUTPUT
           echo "$CHANGELOG"
           echo "EOF" >> $GITHUB_OUTPUT
