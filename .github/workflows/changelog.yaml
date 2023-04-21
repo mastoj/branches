@@ -35,6 +35,9 @@ on:
         required: false
         description: 'An example secret, if needed.'
 
+env:
+  GH_TOKEN: ${{ github.token }}
+
 jobs:
   custom-job:
     runs-on: ubuntu-latest
