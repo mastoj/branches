@@ -1,0 +1,42 @@
+@apiKey={{$dotenv JIRA_API_KEY}}
+@ticketId=B2X-762
+@jiraHost=https://elkjop.atlassian.net
+@jiraAgent={{$dotenv JIRA_BUILD_AGENT}}
+@jiraDeploymentField=customfield_10237
+@jiraDeployedToField=customfield_10234
+
+#https://elkjop.atlassian.net/rest/api/2/issue/'${ISSUE} 
+### Get ticket
+GET {{jiraHost}}/rest/api/2/issue/{{ticketId}}?expand=names
+Authorization: Basic {{jiraAgent}}
+
+### Get fields
+GET {{jiraHost}}/rest/api/2/fields
+Authorization: Basic {{jiraAgent}}
+
+#Authorization: Basic {{apiKey}}
+#buildagent@elkjop.no:CHYz8N0P3cPqGQkLWr0h2053
+
+# Content-Type: application/json
+
+### Update issue with PUT
+PUT {{jiraHost}}/rest/api/2/issue/{{ticketId}}
+Authorization: Basic {{jiraAgent}}
+Content-Type: application/json
+
+{ 
+    "update": { 
+        "{{jiraDeployedToField}}": [ 
+            {
+                "add": {
+                    "value": "delta-dev (Dev)"
+                }
+            } 
+        ],
+        "{{jiraDeploymentField}}": [ 
+            {
+                "add": "slask"
+            } 
+        ]
+    }
+}
