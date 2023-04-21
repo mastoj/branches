@@ -1,6 +1,16 @@
 name: Publish changelog
 
 on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'The tag for the deployment'
+        required: true
+        type: string
+      env:
+        description: 'The environment to deploy to'
+        required: true
+        type: string
   workflow_call:
     inputs:
       tag:
