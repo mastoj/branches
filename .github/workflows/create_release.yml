@@ -59,31 +59,31 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
       - name: Print change log
         run: echo "${{ steps.changelog.outputs.changelog }}"
-      - name: Update Teams PR channel with links
-        uses: satak/webrequest-action@v1.2.3
-        with:
-          url: ${{ secrets.TEAMS_PR_URL }}
-          method: POST
-          payload: >-
-            {
-              "type": "message",
-              "attachments": [
-                {
-                  "contentType": "application/vnd.microsoft.teams.card.o365connector",
-                  "content": {
-                    "@type": "MessageCard",
-                    "@context": "https://schema.org/extensions",
-                    "summary": "New release",
-                    "title": "New release for application in environment",
-                    "sections": [
-                      {
-                        "text": ${{ toJson(steps.changelog.outputs.changelog) }}
-                      }
-                    ]
-                  }
-                }
-              ]
-            }
+      # - name: Update Teams PR channel with links
+      #   uses: satak/webrequest-action@v1.2.3
+      #   with:
+      #     url: ${{ secrets.TEAMS_PR_URL }}
+      #     method: POST
+      #     payload: >-
+      #       {
+      #         "type": "message",
+      #         "attachments": [
+      #           {
+      #             "contentType": "application/vnd.microsoft.teams.card.o365connector",
+      #             "content": {
+      #               "@type": "MessageCard",
+      #               "@context": "https://schema.org/extensions",
+      #               "summary": "New release",
+      #               "title": "New release for application in environment",
+      #               "sections": [
+      #                 {
+      #                   "text": ${{ toJson(steps.changelog.outputs.changelog) }}
+      #                 }
+      #               ]
+      #             }
+      #           }
+      #         ]
+      #       }
 # echo "New version: ${{ steps.tag_version.outputs.new_version }}"
 # git show ${{ steps.tag_version.outputs.new_version }}
 # --pretty:'%s' 
